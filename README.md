@@ -26,8 +26,3 @@ User is required to sign up in order to access the functionality of the logical 
 ## Staged
 The django app is hosted on an EC2 server, hence you can directly check the functionality of the API through there. No auth token is required in this case, the app can be accessed [here](http://18.224.7.211:8000/shorten).
 
-## Setup
-
-to run locally: `make`
-
-to run in a container: `make container`
