@@ -55,7 +55,7 @@ def login_view(request):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([])  # todo: add the authentication classes
+@permission_classes([IsAuthenticated])
 def shorten_url(request):
     """
     this method implements the API logic for shortening the URL.
@@ -71,19 +71,19 @@ def shorten_url(request):
             return Response({
                 'message': "URL shortened and saved into database successfully!",
                 'shortened_url': response['message'],
-            })
+            }, status=status.HTTP_201_CREATED)
         else:
             return Response({
                 'message': response['message']
-            })  # todo: add response codes
+            }, status=status.HTTP_400_BAD_REQUEST)
     except Exception:
         return Response({
             'message': 'Please make sure the keys entered are correct.'
-        })
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([])
+@permission_classes([IsAuthenticated])
 def get_url_from_hash(request):
     """
     this method is used to retrieve the url corresponding to a specific hash.
@@ -95,20 +95,20 @@ def get_url_from_hash(request):
         instance = URLMapping.objects.get(url_hash=url_hash)
         return Response({
             'url': instance.url
-        })
+        }, status=status.HTTP_200_OK)
     except ObjectDoesNotExist:
         return Response({
             'message': "The hashed url entered does not exist in the database."
-        })
+        }, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         print(e)
         return Response({
             'message': "Some error occurred, please try again."
-        })
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([])
+@permission_classes([IsAuthenticated])
 def get_hash_from_url(request):
     """
     this method is used to retrieve the hash for a specific url.
@@ -120,13 +120,13 @@ def get_hash_from_url(request):
         instance = URLMapping.objects.get(url=url)
         return Response({
             'url': instance.url_hash
-        })
+        }, status=status.HTTP_200_OK)
     except ObjectDoesNotExist:
         return Response({
             'message': "The entered url does not exist in the database."
-        })
+        }, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         print(e)
         return Response({
             'message': "Some error occurred, please try again."
-        })
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
