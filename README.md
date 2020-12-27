@@ -24,7 +24,7 @@ User is required to sign up in order to access the functionality of the logical 
 * Get actual URL of a shortened URL: `http://0.0.0.0:8000/hash2url/`
 
 ## Staged
-The django app is hosted on an EC2 server, hence you can directly check the functionality of the API through there. No auth token is required in this case, the app can be accessed [here](www.google.com).
+The django app is hosted on an EC2 server, hence you can directly check the functionality of the API through there. No auth token is required in this case, the app can be accessed [here](http://18.224.7.211:8000/shorten).
 
 ## Setup
 
