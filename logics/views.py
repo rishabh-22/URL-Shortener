@@ -92,6 +92,8 @@ def get_url_from_hash(request):
     """
     url_hash = request.data.get('hash')
     try:
+        if url_hash is None:
+            raise Exception
         instance = URLMapping.objects.get(url_hash=url_hash)
         return Response({
             'url': instance.url
@@ -103,8 +105,8 @@ def get_url_from_hash(request):
     except Exception as e:
         print(e)
         return Response({
-            'message': "Some error occurred, please try again."
-        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            'message': "Please check the keys entered."
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'POST'])
@@ -117,6 +119,8 @@ def get_hash_from_url(request):
     """
     url = request.data.get('url')
     try:
+        if url is None:
+            raise Exception
         instance = URLMapping.objects.get(url=url)
         return Response({
             'url': instance.url_hash
@@ -128,5 +132,5 @@ def get_hash_from_url(request):
     except Exception as e:
         print(e)
         return Response({
-            'message': "Some error occurred, please try again."
-        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            'message': "Please check the keys entered."
+        }, status=status.HTTP_400_BAD_REQUEST)
