@@ -9,7 +9,7 @@ from rest_framework.authtoken.models import Token
 class URLMapping(models.Model):
     id = models.IntegerField(primary_key=True)
     url_hash = models.CharField(max_length=30, unique=True, null=False)
-    url = models.TextField(max_length=255, unique=True, null=False)
+    url = models.TextField(unique=True, null=False)
 
     def __str__(self):
         return f"URL {self.url[:10]}... mapped to hash {self.url_hash}."
